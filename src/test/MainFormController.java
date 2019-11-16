@@ -1,6 +1,8 @@
 package test;
 
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,8 +30,13 @@ public class MainFormController {
 
 
     @FXML
-    void btn1Action(ActionEvent event) {
+    void btn1Action(ActionEvent event) throws SQLException {
         txtArea1.insertText(0,"a");
+        String sql = "SELECT * FROM \"user\"";
+
+        Connection conn = DBHelper.connect();
+        DBHelper.query(conn, sql);
+        conn.close();
     }
 
     @FXML
