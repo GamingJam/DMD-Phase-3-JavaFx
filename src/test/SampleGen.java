@@ -1,7 +1,7 @@
 package test;
 import java.io.FileNotFoundException;
 
-public class JMain {
+public class SampleGen {
     public static void main(String[] args) throws FileNotFoundException {
         Generator g = new Generator();
         System.out.println(g.getRandomDate());

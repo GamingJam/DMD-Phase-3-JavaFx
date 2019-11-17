@@ -16,11 +16,11 @@ class Generator {
 
 
     Generator() throws FileNotFoundException {
-        scf = new Scanner(new File("./src/test/NamesF.txt"));
-        scm = new Scanner(new File("./src/test/NamesM.txt"));
-        scs = new Scanner(new File("./src/test/Surnames.txt"));
-        scmf = new Scanner(new File("./src/test/MedicalFacts.txt"));
-        scmm = new Scanner(new File("./src/test/Medicament.txt"));
+        scf = new Scanner(new File("./src/test/txts/NamesF.txt"));
+        scm = new Scanner(new File("./src/test/txts/NamesM.txt"));
+        scs = new Scanner(new File("./src/test/txts/Surnames.txt"));
+        scmf = new Scanner(new File("./src/test/txts/MedicalFacts.txt"));
+        scmm = new Scanner(new File("./src/test/txts/Medicament.txt"));
     }
 
     String getFemaleName() {
