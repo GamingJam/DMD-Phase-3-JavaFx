@@ -34,8 +34,8 @@ public class MainFormController {
         txtArea1.insertText(0,"a");
         String sql = "SELECT * FROM \"user\"";
 
-        Connection conn = DBHelper.connect();
-        DBHelper.query(conn, sql);
+        Connection conn = DBConnector.connect();
+        DBConnector.query(conn, sql);
         conn.close();
     }
 

@@ -2,7 +2,8 @@ package test;
 
 import java.sql.*;
 
-public class DBHelper {
+public class DBConnector {
+    
     public static Connection connect() {
         Connection conn = null;
         try {
