@@ -25,6 +25,7 @@ create table "user" (
     works_in_ambulance_id int REFERENCES ambulance(id),
     address varchar(256) ,
     phone int ,
+    age int not null,
     account_id int not null UNIQUE REFERENCES account(id)
 );
 
@@ -47,13 +48,9 @@ create table report (
 
 create table patient (
     id SERIAL PRIMARY KEY ,
+    user_ssn int not null UNIQUE REFERENCES "user"(ssn) ,
     history varchar(1000000) not null ,
     registration_date date not null
-);
-
-create table is_patient_of (
-    is_patient_id int not null REFERENCES patient(id),
-    of_user_ssn int not null REFERENCES "user"(ssn)
 );
 
 create table medical_report (
@@ -67,7 +64,8 @@ create table appointment (
     id SERIAL PRIMARY KEY ,
     appointed_by_user_ssn int not null REFERENCES "user" (ssn),
     for_patient_id int not null REFERENCES patient (id),
-    data date not null
+    data timestamp not null ,
+    day varchar(10) not null
 );
 
 create table medical_certificate (
@@ -106,7 +104,7 @@ create table chat (
     name varchar(100) not null
 );
 
-create table messages (
+create table message (
     id SERIAL PRIMARY KEY ,
     in_chat_id int not null REFERENCES chat (id),
     from_user_ssn int not null REFERENCES "user" (ssn),
