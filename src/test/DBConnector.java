@@ -3,49 +3,67 @@ package test;
 import java.sql.*;
 
 public class DBConnector {
-    
-    public static Connection connect() {
-        Connection conn = null;
-        try {
-            // db parameters
-            String url = "jdbc:sqlite:identifier.sqlite";
-            // create a connection to the database
-            conn = DriverManager.getConnection(url);
+    private String db_url;
+    private Connection connection;
 
-            if(conn == null)
-                throw new SQLException("No DB connection established!");
-            else
-                System.out.println("Connection to SQLite has been established.");
-            return conn;
+    public DBConnector(String db_url) {
+        this.db_url = db_url;
 
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        } finally {
-//            try {
-//                if (conn != null) {
-//                    conn.close();
-//                }
-//            } catch (SQLException ex) {
-//                System.out.println(ex.getMessage());
-//            }
-        }
-        return null;
+        this.hold_invariant();
     }
 
-    public static void query(Connection conn, String sql){
-        try (Statement stmt = conn.createStatement()) {
-            // create a new table
-            ResultSet answer = stmt.executeQuery(sql);
+    /**
+     * The function guarantees that class will be connected to the database
+     */
+    private void hold_invariant(){
+        boolean isConnected = false;
 
-            System.out.println("Query succeed");
-
-            while (answer.next()) {
-                System.out.println(answer.getInt("id") +  "\t" +
-                        answer.getString("name") + "\t" +
-                        answer.getString("password"));
+        while(!isConnected){
+            try {
+                if(connection == null || !connection.isValid(5)){
+                    this.connect();
+                }
+                isConnected = true;
+            }catch (SQLException ex){
+                isConnected = false;
+                System.err.println("Error message: " + ex.getLocalizedMessage());
+                System.err.println("State: "+ex.getSQLState());
             }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+
+            if(!isConnected){
+                System.err.println("DB connection failed, retrying");
+            }
         }
     }
+
+    private void connect() throws SQLException {
+        // create a connection to the database
+        this.connection = DriverManager.getConnection(this.db_url);
+        System.err.println("Connected to DB successfully");
+    }
+
+    public String query(String sql){
+        this.hold_invariant();
+        StringBuilder result = new StringBuilder();
+
+        try (Statement stmt = this.connection.createStatement()) {
+            // create a new table
+            ResultSet resultSet = stmt.executeQuery(sql);
+            System.err.println("Query succeed");
+            int columnCount = resultSet.getMetaData().getColumnCount();
+
+            while (resultSet.next()) {
+                for(int i = 1; i <= columnCount; ++i){
+                    if (i > 1) result.append(",  ");
+                    result.append(resultSet.getString(i));
+                }
+                result.append("\n");
+            }
+
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return result.toString();
+    }
+
 }
