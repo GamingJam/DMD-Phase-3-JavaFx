@@ -1,6 +1,7 @@
 package test;
 
 import java.sql.*;
+import java.util.concurrent.TimeUnit;
 
 public class DBConnector {
     private String db_url;
@@ -27,7 +28,11 @@ public class DBConnector {
             }catch (SQLException ex){
                 isConnected = false;
                 System.err.println("Error message: " + ex.getLocalizedMessage());
-                System.err.println("State: "+ex.getSQLState());
+                try {
+                    TimeUnit.SECONDS.sleep(2);
+                } catch (InterruptedException e) {
+                    System.err.println(e.getMessage());
+                }
             }
 
             if(!isConnected){
