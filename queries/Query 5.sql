@@ -15,11 +15,11 @@ FROM(
                 ) as patients_visited_by_doctor_in_year
                 GROUP BY ssn, first_name, last_name, year
             ) as amount_of_patient_visited_by_doctor_in_year
-            WHERE patients_in_year >= 1
+            WHERE patients_in_year >= 5
         ) as hard_working_years_of_doctor
         GROUP BY ssn, last_name, first_name
     ) as amount_of_ard_working_years_of_doctor
-    WHERE amount_of_hard_working_years = 2
+    WHERE amount_of_hard_working_years = 10
 ) as doctors_with_not_less_than_5_patients_per_year 
 JOIN 
 (
@@ -33,6 +33,6 @@ JOIN
         ) as patients_visited_by_doctor_ssn
         GROUP BY ssn
     ) as amount_of_patients_visited_by_doctor_ssn
-    WHERE total_patients >= 1
+    WHERE total_patients >= 100
 ) as doctors_with_not_less_than_100_patients 
 on ssn = ssn_of_doctor_with_100_patients
