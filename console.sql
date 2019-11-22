@@ -11,8 +11,8 @@ create table ambulance (
 
 create table account (
     id SERIAL PRIMARY KEY ,
-    login varchar(8) not null UNIQUE,
-    password varchar(8) not null
+    login varchar(32) not null UNIQUE,
+    password varchar(32) not null
 );
 
 create table "user" (
@@ -64,7 +64,7 @@ create table appointment (
     id SERIAL PRIMARY KEY ,
     appointed_by_user_ssn int not null REFERENCES "user" (ssn),
     for_patient_id int not null REFERENCES patient (id),
-    data timestamp not null ,
+    date timestamp not null ,
     day varchar(10) not null
 );
 
