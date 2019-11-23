@@ -96,7 +96,7 @@ public class PostresGen {
 
         for(int i = 1; i <= finish; ++i){
             result.append(
-                    String.format("INSERT INTO content VALUES (%d, %d, 'This first draft of hospital`s website');\n"
+                    String.format("INSERT INTO content VALUES (%d, %d, 'This is first draft of hospital`s website');\n"
                             , i, webpages.get(i%webpages.size()))
             );
         }
@@ -211,7 +211,7 @@ public class PostresGen {
         for(int i = 1; i <= finish; ++i){
             result.append(
                     String.format("INSERT INTO medicament VALUES (%d, '%s', '%s', %d);\n"
-                            , i, gen.getPassword(), gen.getMedicament(), departmentIDs.get(i%departmentIDs.size()))
+                            , i, gen.getPassword(), gen.getMedicament(), departmentIDs.get(i % departmentIDs.size()))
             );
         }
 
@@ -467,7 +467,7 @@ public class PostresGen {
                             , i - start + 1, DataGenerator.departmentNames.get(i)
                             , gen.nextInt(1000000, 99999999))
             );
-            this.departmentIDs.add(i);
+            this.departmentIDs.add(i - start + 1);
         }
 
         return result.toString();
