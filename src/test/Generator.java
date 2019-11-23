@@ -13,7 +13,7 @@ class Generator {
     private Scanner scs;
     private Scanner scmf;
     private Scanner scmm;
-
+    private Scanner scnn;
 
     Generator() throws FileNotFoundException {
         scf = new Scanner(new File("./src/test/txts/NamesF.txt"));
@@ -21,10 +21,15 @@ class Generator {
         scs = new Scanner(new File("./src/test/txts/Surnames.txt"));
         scmf = new Scanner(new File("./src/test/txts/MedicalFacts.txt"));
         scmm = new Scanner(new File("./src/test/txts/Medicament.txt"));
+        scnn = new Scanner(new File("./src/test/txts/Nicknames.txt"));
     }
 
     String getFemaleName() {
         return scf.nextLine();
+    }
+
+    String getNickname() {
+        return scnn.nextLine();
     }
 
     String getMedicalFact() {
@@ -47,10 +52,11 @@ class Generator {
         return new Timestamp(ThreadLocalRandom.current().nextLong(942842538000L) + 631152000000L);
     }
 
-    boolean getBool(){
+    boolean getBool() {
         return ThreadLocalRandom.current().nextBoolean();
     }
 
+    
 
 
 }
