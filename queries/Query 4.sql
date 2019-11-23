@@ -6,7 +6,7 @@ INSERT INTO possible_charge VALUES (250);
 INSERT INTO possible_charge VALUES (400);
 INSERT INTO possible_charge VALUES (500);
 
-SELECT SUM(charge) as income_in_rubles
+SELECT SUM(charge*amount_of_appointments) as income_in_rubles
 FROM (
          SELECT age, amount_of_appointments
          FROM (
