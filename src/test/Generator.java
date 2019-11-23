@@ -56,7 +56,7 @@ class Generator {
         return ThreadLocalRandom.current().nextBoolean();
     }
 
-    
+
 
 
 }
