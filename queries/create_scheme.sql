@@ -144,4 +144,4 @@ CREATE TABLE supply (
     serial_number INTEGER PRIMARY KEY AUTOINCREMENT,
     name VARCHAR(256) NOT NULL,
     belongs_to_department_id INTEGER NOT NULL REFERENCES department(id)
-)
+);
