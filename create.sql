@@ -29,11 +29,10 @@ create table "user" (
     account_id int not null UNIQUE REFERENCES account(id)
 );
 
-
 create table notification (
     id SERIAL PRIMARY KEY ,
     created_by_user_ssn int not null REFERENCES "user"(ssn),
-    message varchar(500) not null
+    message text not null
 );
 
 create table is_for (
@@ -44,13 +43,13 @@ create table is_for (
 create table report (
     id SERIAL PRIMARY KEY ,
     created_by_user_ssn int not null REFERENCES "user"(ssn),
-    description varchar(10000) not null
+    description text not null
 );
 
 create table patient (
     id SERIAL PRIMARY KEY ,
     user_ssn int not null UNIQUE REFERENCES "user"(ssn) ,
-    history varchar(1000000) not null ,
+    history text not null ,
     registration_date date not null
 );
 
@@ -58,7 +57,7 @@ create table medical_report (
     id SERIAL PRIMARY KEY ,
     assigned_by_user_ssn int not null REFERENCES "user" (ssn),
     linked_to_patient_id int not null REFERENCES patient (id),
-    content varchar(10000) not null
+    content text not null
 );
 
 create table appointment (
@@ -72,7 +71,7 @@ create table medical_certificate (
     id SERIAL PRIMARY KEY ,
     by_user_ssn int not null REFERENCES "user" (ssn),
     for_patient_id int not null REFERENCES patient (id),
-    description varchar (1000) not null
+    description text not null
 );
 
 create table invoice (
@@ -80,12 +79,12 @@ create table invoice (
     by_user_ssn int not null REFERENCES "user" (ssn),
     to_patient_id int not null REFERENCES patient (id),
     balance_due money not null ,
-    reason varchar(1000) not null
+    reason text not null
 );
 
 create table request (
     id SERIAL PRIMARY KEY ,
-    description varchar(1000) not null,
+    description text not null,
     completed bool not null     -- true - completed, false - not completed
 );
 
@@ -108,7 +107,7 @@ create table message (
     id SERIAL PRIMARY KEY ,
     in_chat_id int not null REFERENCES chat (id),
     from_user_ssn int not null REFERENCES "user" (ssn),
-    text varchar(5000) not null
+    text text not null
 );
 
 create table member_of_chat (
@@ -124,7 +123,7 @@ create table web_page (
 create table "content" (
     id SERIAL PRIMARY KEY ,
     in_page_id int not null REFERENCES web_page(id),
-    text varchar (1000000) not null
+    text text not null
 );
 
 create table salary (
@@ -162,6 +161,13 @@ INSERT INTO report VALUES (1, 3, '5000 for advertising to find new doctors');
 INSERT INTO patient VALUES (1, 1, 'was bitten by crocodile', '12.03.2017');
 INSERT INTO medical_report VALUES (1, 2, 1, 'paracetamol 2 times every day during one week');
 INSERT INTO appointment VALUES (1, 2, 1, '15.03.2017 15:30:00');
+INSERT INTO appointment VALUES (2, 2, 1, '22.03.2017 14:00:00');
+INSERT INTO appointment VALUES (3, 2, 1, '29.03.2017 11:10:00');
+INSERT INTO appointment VALUES (4, 2, 1, '05.04.2017 12:45:00');
+INSERT INTO appointment VALUES (5, 2, 1, '16.03.2017 15:30:00');
+INSERT INTO appointment VALUES (6, 2, 1, '23.03.2017 14:00:00');
+INSERT INTO appointment VALUES (7, 2, 1, '30.03.2017 11:10:00');
+INSERT INTO appointment VALUES (8, 2, 1, '06.04.2017 12:45:00');
 INSERT INTO medical_certificate VALUES (1, 2, 1, '2 weeks free from job');
 INSERT INTO invoice VALUES (1, 2, 1, '1000', 'visit to doctor + paracetamol');
 INSERT INTO request VALUES (1, 'I need paracetamol', false);
