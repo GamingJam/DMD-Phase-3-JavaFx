@@ -6,17 +6,18 @@ import java.util.concurrent.ThreadLocalRandom;
 public class PostresGen {
     private DataGenerator gen;
 
-    public PostresGen () throws FileNotFoundException {
+    public PostresGen() throws FileNotFoundException {
         this.gen = new DataGenerator();
     }
 
-    public String generate(){
+    public String generate() {
         StringBuilder result = new StringBuilder("");
 
         // Tables
         result.append(this.genDepartments()).append("\n\n");
         result.append(this.genAmbulance()).append("\n\n");
         result.append(this.genAccount()).append("\n\n");
+        /*
         result.append(this.genUser()).append("\n\n");
         result.append(this.genSalary()).append("\n\n");
         result.append(this.genNotification()).append("\n\n");
@@ -39,16 +40,18 @@ public class PostresGen {
         result.append(this.genMember_of_chat()).append("\n\n");
         result.append(this.genWeb_page()).append("\n\n");
         result.append(this.genContent()).append("\n\n");
+        */
 
         return result.toString();
     }
 
+    /*
     private String genContent() {
         StringBuilder result = new StringBuilder();
 
         int finish = this.gen.nextInt(10, 31);
 
-        for(int i = 0; i < finish; ++i){
+        for(int i = 1; i <= finish; ++i){
             result.append(
                     String.format("INSERT INTO department VALUES (%d, '%s', %d);\n"
                             , i-start+1, DataGenerator.departmentNames.get(i)
@@ -64,7 +67,7 @@ public class PostresGen {
 
         int finish = this.gen.nextInt(10, 31);
 
-        for(int i = 0; i < finish; ++i){
+        for(int i = 1; i <= finish; ++i){
             result.append(
                     String.format("INSERT INTO department VALUES (%d, '%s', %d);\n"
                             , i-start+1, DataGenerator.departmentNames.get(i)
@@ -80,7 +83,7 @@ public class PostresGen {
 
         int finish = this.gen.nextInt(10, 31);
 
-        for(int i = 0; i < finish; ++i){
+        for(int i = 1; i <= finish; ++i){
             result.append(
                     String.format("INSERT INTO department VALUES (%d, '%s', %d);\n"
                             , i-start+1, DataGenerator.departmentNames.get(i)
@@ -96,7 +99,7 @@ public class PostresGen {
 
         int finish = this.gen.nextInt(10, 31);
 
-        for(int i = 0; i < finish; ++i){
+        for(int i = 1; i <= finish; ++i){
             result.append(
                     String.format("INSERT INTO department VALUES (%d, '%s', %d);\n"
                             , i-start+1, DataGenerator.departmentNames.get(i)
@@ -112,7 +115,7 @@ public class PostresGen {
 
         int finish = this.gen.nextInt(10, 31);
 
-        for(int i = 0; i < finish; ++i){
+        for(int i = 1; i <= finish; ++i){
             result.append(
                     String.format("INSERT INTO department VALUES (%d, '%s', %d);\n"
                             , i-start+1, DataGenerator.departmentNames.get(i)
@@ -128,7 +131,7 @@ public class PostresGen {
 
         int finish = this.gen.nextInt(10, 31);
 
-        for(int i = 0; i < finish; ++i){
+        for(int i = 1; i <= finish; ++i){
             result.append(
                     String.format("INSERT INTO department VALUES (%d, '%s', %d);\n"
                             , i-start+1, DataGenerator.departmentNames.get(i)
@@ -144,7 +147,7 @@ public class PostresGen {
 
         int finish = this.gen.nextInt(10, 31);
 
-        for(int i = 0; i < finish; ++i){
+        for(int i = 1; i <= finish; ++i){
             result.append(
                     String.format("INSERT INTO department VALUES (%d, '%s', %d);\n"
                             , i-start+1, DataGenerator.departmentNames.get(i)
@@ -160,7 +163,7 @@ public class PostresGen {
 
         int finish = this.gen.nextInt(10, 31);
 
-        for(int i = 0; i < finish; ++i){
+        for(int i = 1; i <= finish; ++i){
             result.append(
                     String.format("INSERT INTO department VALUES (%d, '%s', %d);\n"
                             , i-start+1, DataGenerator.departmentNames.get(i)
@@ -176,7 +179,7 @@ public class PostresGen {
 
         int finish = this.gen.nextInt(10, 31);
 
-        for(int i = 0; i < finish; ++i){
+        for(int i = 1; i <= finish; ++i){
             result.append(
                     String.format("INSERT INTO department VALUES (%d, '%s', %d);\n"
                             , i-start+1, DataGenerator.departmentNames.get(i)
@@ -192,7 +195,7 @@ public class PostresGen {
 
         int finish = this.gen.nextInt(10, 31);
 
-        for(int i = 0; i < finish; ++i){
+        for(int i = 1; i <= finish; ++i){
             result.append(
                     String.format("INSERT INTO department VALUES (%d, '%s', %d);\n"
                             , i-start+1, DataGenerator.departmentNames.get(i)
@@ -208,7 +211,7 @@ public class PostresGen {
 
         int finish = this.gen.nextInt(10, 31);
 
-        for(int i = 0; i < finish; ++i){
+        for(int i = 1; i <= finish; ++i){
             result.append(
                     String.format("INSERT INTO department VALUES (%d, '%s', %d);\n"
                             , i-start+1, DataGenerator.departmentNames.get(i)
@@ -224,7 +227,7 @@ public class PostresGen {
 
         int finish = this.gen.nextInt(10, 31);
 
-        for(int i = 0; i < finish; ++i){
+        for(int i = 1; i <= finish; ++i){
             result.append(
                     String.format("INSERT INTO department VALUES (%d, '%s', %d);\n"
                             , i-start+1, DataGenerator.departmentNames.get(i)
@@ -240,7 +243,7 @@ public class PostresGen {
 
         int finish = this.gen.nextInt(10, 31);
 
-        for(int i = 0; i < finish; ++i){
+        for(int i = 1; i <= finish; ++i){
             result.append(
                     String.format("INSERT INTO department VALUES (%d, '%s', %d);\n"
                             , i-start+1, DataGenerator.departmentNames.get(i)
@@ -256,7 +259,7 @@ public class PostresGen {
 
         int finish = this.gen.nextInt(10, 31);
 
-        for(int i = 0; i < finish; ++i){
+        for(int i = 1; i <= finish; ++i){
             result.append(
                     String.format("INSERT INTO department VALUES (%d, '%s', %d);\n"
                             , i-start+1, DataGenerator.departmentNames.get(i)
@@ -272,7 +275,7 @@ public class PostresGen {
 
         int finish = this.gen.nextInt(10, 31);
 
-        for(int i = 0; i < finish; ++i){
+        for(int i = 1; i <= finish; ++i){
             result.append(
                     String.format("INSERT INTO department VALUES (%d, '%s', %d);\n"
                             , i-start+1, DataGenerator.departmentNames.get(i)
@@ -288,7 +291,7 @@ public class PostresGen {
 
         int finish = this.gen.nextInt(10, 31);
 
-        for(int i = 0; i < finish; ++i){
+        for(int i = 1; i <= finish; ++i){
             result.append(
                     String.format("INSERT INTO department VALUES (%d, '%s', %d);\n"
                             , i-start+1, DataGenerator.departmentNames.get(i)
@@ -304,7 +307,7 @@ public class PostresGen {
 
         int finish = this.gen.nextInt(10, 31);
 
-        for(int i = 0; i < finish; ++i){
+        for(int i = 1; i <= finish; ++i){
             result.append(
                     String.format("INSERT INTO department VALUES (%d, '%s', %d);\n"
                             , i-start+1, DataGenerator.departmentNames.get(i)
@@ -320,7 +323,7 @@ public class PostresGen {
 
         int finish = this.gen.nextInt(10, 31);
 
-        for(int i = 0; i < finish; ++i){
+        for(int i = 1; i <= finish; ++i){
             result.append(
                     String.format("INSERT INTO department VALUES (%d, '%s', %d);\n"
                             , i-start+1, DataGenerator.departmentNames.get(i)
@@ -336,7 +339,7 @@ public class PostresGen {
 
         int finish = this.gen.nextInt(10, 31);
 
-        for(int i = 0; i < finish; ++i){
+        for(int i = 1; i <= finish; ++i){
             result.append(
                     String.format("INSERT INTO department VALUES (%d, '%s', %d);\n"
                             , i-start+1, DataGenerator.departmentNames.get(i)
@@ -352,7 +355,7 @@ public class PostresGen {
 
         int finish = this.gen.nextInt(10, 31);
 
-        for(int i = 0; i < finish; ++i){
+        for(int i = 1; i <= finish; ++i){
             result.append(
                     String.format("INSERT INTO department VALUES (%d, '%s', %d);\n"
                             , i-start+1, DataGenerator.departmentNames.get(i)
@@ -362,13 +365,14 @@ public class PostresGen {
 
         return result.toString();
     }
+    */
 
     private String genAccount() {
         StringBuilder result = new StringBuilder();
 
         int finish = this.gen.nextInt(10, 31);
 
-        for(int i = 0; i < finish; ++i){
+        for (int i = 1; i <= finish; ++i) {
             result.append(
                     String.format("INSERT INTO account VALUES (%d, '%s', '%s');\n"
                             , i, gen.getMaleName(), "qwerty")
@@ -383,7 +387,7 @@ public class PostresGen {
 
         int finish = this.gen.nextInt(10, 31);
 
-        for(int i = 0; i < finish; ++i){
+        for (int i = 1; i <= finish; ++i) {
             result.append(
                     String.format("INSERT INTO ambulance VALUES (%d, %b);\n"
                             , i, gen.getBool())
@@ -393,16 +397,16 @@ public class PostresGen {
         return result.toString();
     }
 
-    public String genDepartments(){
+    public String genDepartments() {
         StringBuilder result = new StringBuilder();
 
         int start = this.gen.nextInt(0, 31);
         int len = this.gen.nextInt(10, 21);
 
-        for(int i = start; i < start + len; ++i){
+        for (int i = start; i < start + len; ++i) {
             result.append(
                     String.format("INSERT INTO department VALUES (%d, '%s', %d);\n"
-                            , i-start+1, DataGenerator.departmentNames.get(i)
+                            , i - start + 1, DataGenerator.departmentNames.get(i)
                             , gen.nextInt(1000000, 99999999))
             );
         }

@@ -15,6 +15,8 @@ public class DataGenerator {
     private Scanner scs;
     private Scanner scmf;
     private Scanner scmm;
+    private Scanner scnn;
+
     public static final ArrayList<String> departmentNames = new ArrayList<String>(Arrays.asList(
             "Accident and emergency (A&E)", "Admissions", "Anesthetics", "Breast Screening"
             , "Burn Center (Burn Unit or Burns Unit)", "Cardiology", "Central Sterile Services Department (CSSD)"
@@ -28,13 +30,13 @@ public class DataGenerator {
             , "Radiotherapy", "Renal", "Rheumatology", "Sexual Health", "Social Work", "Urology"
     ));
 
-
     public DataGenerator() throws FileNotFoundException {
         scf = new Scanner(new File("./src/test/txts/NamesF.txt"));
         scm = new Scanner(new File("./src/test/txts/NamesM.txt"));
         scs = new Scanner(new File("./src/test/txts/Surnames.txt"));
         scmf = new Scanner(new File("./src/test/txts/MedicalFacts.txt"));
         scmm = new Scanner(new File("./src/test/txts/Medicament.txt"));
+        scnn = new Scanner(new File("./src/test/txts/Nicknames.txt"));
     }
 
     public int nextInt(int min, int max) {
@@ -47,6 +49,10 @@ public class DataGenerator {
 
     public String getFemaleName() {
         return scf.nextLine();
+    }
+
+    public String getNickname() {
+        return scnn.nextLine();
     }
 
     public String getMedicalFact() {
