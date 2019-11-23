@@ -19,12 +19,12 @@ create table "user" (
     ssn SERIAL PRIMARY KEY ,
     first_name varchar(256) not null,
     last_name varchar(256) not null,
-    gender char(1) not null,            -- 0 - MALE, 1 - FEMALE
+    gender char(1) not null,            -- M - MALE, F - FEMALE
     role varchar(256) not null,
     works_for_department_id int REFERENCES department(id),
     works_in_ambulance_id int REFERENCES ambulance(id),
     address varchar(256) ,
-    phone int ,
+    phone varchar(12) ,
     age int not null,
     account_id int not null UNIQUE REFERENCES account(id)
 );
@@ -123,7 +123,7 @@ create table web_page (
 
 create table "content" (
     id SERIAL PRIMARY KEY ,
-    in_page_id int not null REFERENCES page_of_hospital_information_portal(id),
+    in_page_id int not null REFERENCES web_page(id),
     text varchar (1000000) not null
 );
 
@@ -153,9 +153,9 @@ INSERT INTO ambulance VALUES (1, true);
 INSERT INTO account VALUES (1, 'i_am_alfiya', 'my_password');
 INSERT INTO account VALUES (2, 'i_am_mike', '11223344');
 INSERT INTO account VALUES (3, 'i_am_jam', '1234567890');
-INSERT INTO "user" VALUES (1, 'Alfiya', 'Musabekova', 1, 'patient', null, null, 'Universitetskaya 1', 89961211204, 18, 1);
-INSERT INTO "user" VALUES (2, 'Mike', 'Kuskov', 0, 'doctor', 1, 1, 'Sadovaya 15a', 87778889900, 28, 2);
-INSERT INTO "user" VALUES (3, 'Jameel', 'Mukha', 0, 'manager', 2, null, 'Luiz Street 12', 85552220011, 35, 3);
+INSERT INTO "user" VALUES (1, 'Alfiya', 'Musabekova', 'F', 'patient', null, null, 'Universitetskaya 1', '89961211204', 18, 1);
+INSERT INTO "user" VALUES (2, 'Mike', 'Kuskov', 'M', 'doctor', 1, 1, 'Sadovaya 15a', '87778889900', 28, 2);
+INSERT INTO "user" VALUES (3, 'Jameel', 'Mukha', 'M', 'manager', 2, null, 'Luiz Street 12', '85552220011', 35, 3);
 INSERT INTO notification VALUES (1, 2, 'I need more collegues');
 INSERT INTO is_for VALUES (3, 1);
 INSERT INTO report VALUES (1, 3, '5000 for advertising to find new doctors');
