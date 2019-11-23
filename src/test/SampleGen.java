@@ -9,7 +9,7 @@ import java.io.IOException;
 public class SampleGen {
     public static void main(String[] args) throws FileNotFoundException {
         DataGenerator g = new DataGenerator();
-        System.out.println(g.getRandomDate());
+        System.out.println(g.getDate());
         System.out.println(g.getFemaleName() + " " + g.getSurname() + " " + g.getNickname());
         System.out.println(g.getMaleName() + " " + g.getSurname() + " " + g.getNickname());
         System.out.println(g.getBool());
@@ -21,16 +21,13 @@ public class SampleGen {
         System.out.println(g.getMedicament());
 
         PostresGen gen = new PostresGen();
-        System.out.print("Deps: ");
-        try {
-            FileWriter write = new FileWriter("insert.sql");
-            write.write(gen.generate());
-            write.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        System.out.print("Generation: ");
+//        gen.generateToFile("insert.sql");
         System.out.println("done!");
+
+//        System.out.println(g.getDate());
+//        System.out.println(gen.genAccount());
+//        System.out.println(gen.genUser());
+//        System.out.println(gen.genPatient());
     }
 }

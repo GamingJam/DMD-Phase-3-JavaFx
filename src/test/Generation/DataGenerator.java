@@ -3,8 +3,10 @@ package test.Generation;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -28,6 +30,10 @@ public class DataGenerator {
             , "Oncology", "Ophthalmology", "Orthopaedics", "Otolaryngology (Ear, Nose, and Throat)", "Pain Management"
             , "Patient Accounts", "Patient Services", "Pharmacy", "Physiotherapy", "Purchasing & Supplies", "Radiology"
             , "Radiotherapy", "Renal", "Rheumatology", "Sexual Health", "Social Work", "Urology"
+    ));
+
+    public static final ArrayList<String> roleNames = new ArrayList<>(Arrays.asList(
+            "patient", "doctor", "nurse"
     ));
 
     public DataGenerator() throws FileNotFoundException {
@@ -59,8 +65,26 @@ public class DataGenerator {
         return ans.toString();
     }
 
-    public char getGender() {
-        return this.getBool() ? 'M' : 'F';
+    public String getGender(boolean isMale) {
+        return isMale ? "M" : "F";
+    }
+
+    public String getRole(){
+        return roleNames.get(nextInt(0, roleNames.size()));
+    }
+
+    public String getPhone(){
+        StringBuilder result = new StringBuilder("+7");
+        for(int i = 0; i < 10; ++i){
+            result.append(nextInt(0, 10));
+        }
+        assert result.length() <= 12;
+
+        return result.toString();
+    }
+
+    public String getAddress(){
+        return "null";
     }
 
     public String getFemaleName() {
@@ -83,8 +107,13 @@ public class DataGenerator {
         return scs.nextLine();
     }
 
-    public Timestamp getRandomDate() {
-        return new Timestamp(ThreadLocalRandom.current().nextLong(942842538000L) + 631152000000L);
+    public String getDateTime() {
+        return (new Timestamp(ThreadLocalRandom.current().nextLong(942842538000L) + 631152000000L)).toString();
+    }
+
+    public String getDate() {
+        Timestamp time = new Timestamp(ThreadLocalRandom.current().nextLong(942842538000L) + 631152000000L);
+        return (new SimpleDateFormat("dd.MM.yyyy").format(new Date(time.getTime())));
     }
 
     public boolean getBool() {
