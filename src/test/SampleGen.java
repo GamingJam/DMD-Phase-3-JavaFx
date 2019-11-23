@@ -21,7 +21,7 @@ public class SampleGen {
         System.out.println(g.getMedicament());
 
         PostresGen gen = new PostresGen();
-        System.out.print("Deps:");
+        System.out.print("Deps: ");
         try {
             FileWriter write = new FileWriter("insert.sql");
             write.write(gen.generate());
@@ -31,6 +31,6 @@ public class SampleGen {
             e.printStackTrace();
         }
 
-        System.out.println("done");
+        System.out.println("done!");
     }
 }

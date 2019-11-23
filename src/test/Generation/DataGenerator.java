@@ -43,16 +43,28 @@ public class DataGenerator {
         return ThreadLocalRandom.current().nextInt(min, max);
     }
 
+    public String getNickname() {
+        return scnn.nextLine();
+    }
+
+    public String getPassword() {
+        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvxyz";
+
+        StringBuilder ans = new StringBuilder();
+        int n = this.nextInt(8, 25);
+
+        for(int i = 0; i < n; ++i){
+            ans.append(AlphaNumericString.charAt(this.nextInt(0, AlphaNumericString.length())));
+        }
+        return ans.toString();
+    }
+
     public char getGender() {
         return this.getBool() ? 'M' : 'F';
     }
 
     public String getFemaleName() {
         return scf.nextLine();
-    }
-
-    public String getNickname() {
-        return scnn.nextLine();
     }
 
     public String getMedicalFact() {
