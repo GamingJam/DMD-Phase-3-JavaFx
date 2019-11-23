@@ -124,7 +124,7 @@ public class PostresGen {
     public String genMember_of_chat() {
         StringBuilder result = new StringBuilder();
 
-        int finish = this.gen.nextInt(10, chatIDs.size());
+        int finish = chatIDs.size();
         ArrayList<Integer> users = getSubsetIDs(userIDs, userIDs.size());
         ArrayList<Integer> chats = getSubsetIDs(chatIDs, chatIDs.size());
 
@@ -242,7 +242,7 @@ public class PostresGen {
 
         for(int i = 1; i <= finish; ++i){
             result.append(
-                    String.format("INSERT INTO chat VALUES (%d, 'Chat name');n"
+                    String.format("INSERT INTO chat VALUES (%d, 'Chat name');\n"
                             , i)
             );
             this.chatIDs.add(i);
@@ -311,7 +311,7 @@ public class PostresGen {
 
         for(int i = 1; i <= finish; ++i){
             result.append(
-                    String.format("INSERT INTO appointment VALUES (%d, %d, %d, '%s');\n"
+                    String.format("INSERT INTO appointment VALUES (%d, %d, %d, DATE '%s');\n"
                     , i, users.get(i-1), patients.get(i-1),gen.getDateTime())
             );
         }
@@ -344,7 +344,7 @@ public class PostresGen {
 
         for(int i = 1; i <= finish; ++i){
             result.append(
-                    String.format("INSERT INTO patient VALUES (%d, %d, '%s', '%s');\n"
+                    String.format("INSERT INTO patient VALUES (%d, %d, '%s', DATE '%s');\n"
                             , i, users.get(i-1), gen.getMedicalFact(), gen.getDate())
             );
             this.patientIDs.add(i);

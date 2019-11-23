@@ -113,7 +113,7 @@ public class DataGenerator {
 
     public String getDate() {
         Timestamp time = new Timestamp(ThreadLocalRandom.current().nextLong(942842538000L) + 631152000000L);
-        return (new SimpleDateFormat("dd.MM.yyyy").format(new Date(time.getTime())));
+        return (new SimpleDateFormat("yyyy-MM-dd").format(new Date(time.getTime())));
     }
 
     public boolean getBool() {

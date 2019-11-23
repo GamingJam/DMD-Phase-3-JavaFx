@@ -22,10 +22,13 @@ public class SampleGen {
 
         PostresGen gen = new PostresGen();
         System.out.print("Generation: ");
-//        gen.generateToFile("insert.sql");
+        gen.generateToFile("sql/postgres_insert.sql");
         System.out.println("done!");
 
-//        System.out.println(g.getDate());
+        System.out.println(g.getDate());
+        System.out.println(g.getDate());
+        System.out.println(g.getDateTime());
+        System.out.println(g.getDateTime());
 //        System.out.println(gen.genAccount());
 //        System.out.println(gen.genUser());
 //        System.out.println(gen.genPatient());
