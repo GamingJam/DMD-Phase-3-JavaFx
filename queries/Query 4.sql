@@ -20,8 +20,7 @@ FROM (
                   FROM (
                            SELECT id as app_id, for_patient_id
                            FROM appointment
-                           WHERE (EXTRACT(year FROM date) = EXTRACT(year FROM current_date))
-                             AND (EXTRACT(month FROM date) = EXTRACT(month FROM current_date) - 1)
+                           WHERE date >= (current_date - interval '1 month')
                        ) as appoinments_in_previous_month
                   GROUP BY for_patient_id
               ) as amount_of_appoinments_in_previous_month
