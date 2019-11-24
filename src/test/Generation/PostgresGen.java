@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class PostgresGen {
-    private static final int initialID = 0;
+    private static final int initialID = 100;
 
     private DataGenerator gen;
     private ArrayList<Integer> departmentIDs = new ArrayList<>(30);
@@ -51,7 +51,7 @@ public class PostgresGen {
 
         // Tables
 
-        return "" + this.genDepartments() + "\n\n" +
+        return "BEGIN;\n" + this.genDepartments() + "\n\n" +
                 this.genAmbulance() + "\n\n" +
                 this.genAccount() + "\n\n" +
                 this.genUser() + "\n\n" +
@@ -75,7 +75,7 @@ public class PostgresGen {
                 this.genApproved_request() + "\n\n" +
                 this.genMember_of_chat() + "\n\n" +
                 this.genWeb_page() + "\n\n" +
-                this.genContent() + "\n\n";
+                this.genContent() + "END;\n\n" + "";
     }
 
     public void generateToFile(String filename) {
@@ -354,7 +354,7 @@ public class PostgresGen {
                     String.format("INSERT INTO patient VALUES (%d, %d, '%s', DATE '%s');\n"
                             , initialID + i, users.get(i - 1), gen.getMedicalFact(), gen.getDate())
             );
-            this.patientIDs.add(i);
+            this.patientIDs.add(initialID + i);
         }
 
         return result.toString();
@@ -363,7 +363,7 @@ public class PostgresGen {
     public String genReport() {
         StringBuilder result = new StringBuilder();
 
-        int finish = DataGenerator.nextInt(10, accountsAmount());
+        int finish = DataGenerator.nextInt(6, accountsAmount());
         ArrayList<Integer> users = getSubsetIDs(userIDs, finish);
 
         for (int i = 1; i <= finish; ++i) {

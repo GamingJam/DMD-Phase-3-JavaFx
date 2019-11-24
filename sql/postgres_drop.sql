@@ -1,3 +1,4 @@
+BEGIN TRANSACTION;
 drop table is_for;
 drop table notification;
 drop table report;
@@ -21,3 +22,4 @@ drop table account;
 drop table medicament;
 drop table supply;
 drop table department;
+END TRANSACTION;
