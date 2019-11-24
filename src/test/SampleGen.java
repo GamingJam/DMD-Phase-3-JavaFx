@@ -1,10 +1,9 @@
 package test;
+
 import test.Generation.DataGenerator;
-import test.Generation.PostresGen;
+import test.Generation.PostgresGen;
 
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
 
 public class SampleGen {
     public static void main(String[] args) throws FileNotFoundException {
@@ -20,7 +19,7 @@ public class SampleGen {
         System.out.println(g.getMedicament());
         System.out.println(g.getMedicament());
 
-        PostresGen gen = new PostresGen();
+        PostgresGen gen = new PostgresGen();
         System.out.print("Generation: ");
 //        for(int i = 0; i < 100; ++i) gen.generate();
 //        gen.generateToFile("sql/postgres_insert.sql");

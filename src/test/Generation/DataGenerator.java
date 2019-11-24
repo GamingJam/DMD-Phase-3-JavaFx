@@ -110,7 +110,7 @@ public class DataGenerator {
         return result.toString();
     }
 
-    public String getDepName(){
+    public String getDepName() {
         return depNamesPool.getNext();
     }
 
@@ -118,11 +118,11 @@ public class DataGenerator {
         return isMale ? "M" : "F";
     }
 
-    public String getRandFact(){
+    public String getRandFact() {
         return randomInfoPool.getNext();
     }
 
-    public String getSupply(){
+    public String getSupply() {
         return supplyPool.getNext();
     }
 
