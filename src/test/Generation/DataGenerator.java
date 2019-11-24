@@ -12,14 +12,43 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class DataGenerator {
 
-    private Scanner scf;
-    private Scanner scm;
-    private Scanner scs;
-    private Scanner scmf;
-    private Scanner scmm;
-    private Scanner scnn;
+    private RandomPool femaleNamesPool;
+    private RandomPool maleNamesPool;
+    private RandomPool surnamesPool;
+    private RandomPool medFactsPool;
+    private RandomPool medNamesPool;
+    private RandomPool nicknamePool;
+    private RandomPool randomInfoPool;
+    private RandomPool supplyPool;
+    private RandomPool depNamesPool;
+    private RandomPool roleNamesPool;
+    private RandomPool addressPool;
 
-    public static final ArrayList<String> departmentNames = new ArrayList<String>(Arrays.asList(
+    private class RandomPool {
+        private ArrayList<String> pool = new ArrayList<>();
+
+        RandomPool(String filename) throws FileNotFoundException {
+            Scanner scan = new Scanner(new File(filename));
+            while (scan.hasNext()) {
+                pool.add(scan.nextLine());
+            }
+        }
+
+        RandomPool(ArrayList<String> data) {
+            this.pool = data;
+        }
+
+        public int size() {
+            return pool.size();
+        }
+
+        public String getNext() {
+            return pool.get(DataGenerator.nextInt(0, pool.size()));
+        }
+
+    }
+
+    static final ArrayList<String> departmentNames = new ArrayList<String>(Arrays.asList(
             "Accident and emergency (A&E)", "Admissions", "Anesthetics", "Breast Screening"
             , "Burn Center (Burn Unit or Burns Unit)", "Cardiology", "Central Sterile Services Department (CSSD)"
             , "Chaplaincy", "Coronary Care Unit (CCU)", "Critical Care", "Diagnostic Imaging", "Discharge Lounge"
@@ -32,50 +61,48 @@ public class DataGenerator {
             , "Radiotherapy", "Renal", "Rheumatology", "Sexual Health", "Social Work", "Urology"
     ));
 
-    public static final ArrayList<String> roleNames = new ArrayList<>(Arrays.asList(
+    private static final ArrayList<String> roleNames = new ArrayList<>(Arrays.asList(
             "patient", "doctor", "nurse"
     ));
 
+    private static final ArrayList<String> addresses = new ArrayList<>(Arrays.asList(
+            "Moscow, Luiz Street, 15", "Novo-Cheboksary, Broadway Street, 2"
+            , "Rio De Janeiro, Universitetskaya, 1-1"
+    ));
+
     public DataGenerator() throws FileNotFoundException {
-        scf = new Scanner(new File("./src/test/txts/NamesF.txt"));
-        scm = new Scanner(new File("./src/test/txts/NamesM.txt"));
-        scs = new Scanner(new File("./src/test/txts/Surnames.txt"));
-        scmf = new Scanner(new File("./src/test/txts/MedicalFacts.txt"));
-        scmm = new Scanner(new File("./src/test/txts/Medicament.txt"));
-        scnn = new Scanner(new File("./src/test/txts/Nicknames.txt"));
+        femaleNamesPool = new RandomPool("./src/test/txts/NamesF.txt");
+        maleNamesPool = new RandomPool("./src/test/txts/NamesM.txt");
+        surnamesPool = new RandomPool("./src/test/txts/Surnames.txt");
+        medFactsPool = new RandomPool("./src/test/txts/MedicalFacts.txt");
+        medNamesPool = new RandomPool("./src/test/txts/Medicament.txt");
+        nicknamePool = new RandomPool("./src/test/txts/Nicknames.txt");
+        randomInfoPool = new RandomPool("./src/test/txts/RandomFacts.txt");
+        supplyPool = new RandomPool("./src/test/txts/Supplies.txt");
+        depNamesPool = new RandomPool(departmentNames);
+        roleNamesPool = new RandomPool(roleNames);
+        addressPool = new RandomPool(addresses);
     }
 
-    public int nextInt(int min, int max) {
+    public static int nextInt(int min, int max) {
         return ThreadLocalRandom.current().nextInt(min, max);
-    }
-
-    public String getNickname() {
-        return scnn.nextLine();
     }
 
     public String getPassword() {
         String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvxyz";
 
         StringBuilder ans = new StringBuilder();
-        int n = this.nextInt(8, 25);
+        int n = nextInt(8, 25);
 
-        for(int i = 0; i < n; ++i){
-            ans.append(AlphaNumericString.charAt(this.nextInt(0, AlphaNumericString.length())));
+        for (int i = 0; i < n; ++i) {
+            ans.append(AlphaNumericString.charAt(nextInt(0, AlphaNumericString.length())));
         }
         return ans.toString();
     }
 
-    public String getGender(boolean isMale) {
-        return isMale ? "M" : "F";
-    }
-
-    public String getRole(){
-        return roleNames.get(nextInt(0, roleNames.size()));
-    }
-
-    public String getPhone(){
+    public String getPhone() {
         StringBuilder result = new StringBuilder("+7");
-        for(int i = 0; i < 10; ++i){
+        for (int i = 0; i < 10; ++i) {
             result.append(nextInt(0, 10));
         }
         assert result.length() <= 12;
@@ -83,28 +110,52 @@ public class DataGenerator {
         return result.toString();
     }
 
-    public String getAddress(){
-        return "null";
+    public String getDepName(){
+        return depNamesPool.getNext();
+    }
+
+    public String getGender(boolean isMale) {
+        return isMale ? "M" : "F";
+    }
+
+    public String getRandFact(){
+        return randomInfoPool.getNext();
+    }
+
+    public String getSupply(){
+        return supplyPool.getNext();
+    }
+
+    public String getRole() {
+        return roleNamesPool.getNext();
+    }
+
+    public String getNickname() {
+        return nicknamePool.getNext();
+    }
+
+    public String getAddress() {
+        return addressPool.getNext();
     }
 
     public String getFemaleName() {
-        return scf.nextLine();
+        return femaleNamesPool.getNext();
     }
 
     public String getMedicalFact() {
-        return scmf.nextLine();
+        return medFactsPool.getNext();
     }
 
     public String getMedicament() {
-        return scmm.nextLine();
+        return medNamesPool.getNext();
     }
 
     public String getMaleName() {
-        return scm.nextLine();
+        return maleNamesPool.getNext();
     }
 
     public String getSurname() {
-        return scs.nextLine();
+        return surnamesPool.getNext();
     }
 
     public String getDateTime() {

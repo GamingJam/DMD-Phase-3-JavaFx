@@ -22,7 +22,8 @@ public class SampleGen {
 
         PostresGen gen = new PostresGen();
         System.out.print("Generation: ");
-        gen.generateToFile("sql/postgres_insert.sql");
+//        for(int i = 0; i < 100; ++i) gen.generate();
+//        gen.generateToFile("sql/postgres_insert.sql");
         System.out.println("done!");
 
         System.out.println(g.getDate());

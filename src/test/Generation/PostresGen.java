@@ -9,6 +9,8 @@ import java.util.Collections;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class PostresGen {
+    private static final int initialID = 0;
+
     private DataGenerator gen;
     private ArrayList<Integer> departmentIDs = new ArrayList<>(30);
     private ArrayList<Integer> ambulanceIDs = new ArrayList<>(30);
@@ -25,7 +27,7 @@ public class PostresGen {
     }
 
     public Integer getRandomID(ArrayList<Integer> list){
-        return list.get(this.gen.nextInt(0, list.size()));
+        return list.get(DataGenerator.nextInt(0, list.size()));
     }
 
     /**
@@ -45,36 +47,34 @@ public class PostresGen {
     }
 
     public String generate() {
-        StringBuilder result = new StringBuilder("");
 
         // Tables
-        result.append(this.genDepartments()).append("\n\n");
-        result.append(this.genAmbulance()).append("\n\n");
-        result.append(this.genAccount()).append("\n\n");
-        result.append(this.genUser()).append("\n\n");
-        result.append(this.genNotification()).append("\n\n");
-        result.append(this.genReport()).append("\n\n");
-        result.append(this.genPatient()).append("\n\n");
-        result.append(this.genMedical_report()).append("\n\n");
-        result.append(this.genAppointment()).append("\n\n");
-        result.append(this.genMedical_certificate()).append("\n\n");
-        result.append(this.genInvoice()).append("\n\n");
-        result.append(this.genRequest()).append("\n\n");
-        result.append(this.genChat()).append("\n\n");
-        result.append(this.genMessage()).append("\n\n");
-        result.append(this.genSalary()).append("\n\n");
-        result.append(this.genMedicament()).append("\n\n");
-        result.append(this.genSupply()).append("\n\n");
 
-        // Relations
-        result.append(this.genIs_for()).append("\n\n");
-        result.append(this.genRequired_request()).append("\n\n");
-        result.append(this.genApproved_request()).append("\n\n");
-        result.append(this.genMember_of_chat()).append("\n\n");
-        result.append(this.genWeb_page()).append("\n\n");
-        result.append(this.genContent()).append("\n\n");
+        return "" + this.genDepartments() + "\n\n" +
+                this.genAmbulance() + "\n\n" +
+                this.genAccount() + "\n\n" +
+                this.genUser() + "\n\n" +
+                this.genNotification() + "\n\n" +
+                this.genReport() + "\n\n" +
+                this.genPatient() + "\n\n" +
+                this.genMedical_report() + "\n\n" +
+                this.genAppointment() + "\n\n" +
+                this.genMedical_certificate() + "\n\n" +
+                this.genInvoice() + "\n\n" +
+                this.genRequest() + "\n\n" +
+                this.genChat() + "\n\n" +
+                this.genMessage() + "\n\n" +
+                this.genSalary() + "\n\n" +
+                this.genMedicament() + "\n\n" +
+                this.genSupply() + "\n\n" +
 
-        return result.toString();
+                // Relations
+                this.genIs_for() + "\n\n" +
+                this.genRequired_request() + "\n\n" +
+                this.genApproved_request() + "\n\n" +
+                this.genMember_of_chat() + "\n\n" +
+                this.genWeb_page() + "\n\n" +
+                this.genContent() + "\n\n";
     }
 
     public void generateToFile(String filename){
@@ -91,13 +91,13 @@ public class PostresGen {
     public String genContent() {
         StringBuilder result = new StringBuilder();
 
-        int finish = this.gen.nextInt(10, 31);
+        int finish = DataGenerator.nextInt(10, 31);
         ArrayList<Integer> webpages = getSubsetIDs(web_pageIDs, web_pageIDs.size());
 
         for(int i = 1; i <= finish; ++i){
             result.append(
                     String.format("INSERT INTO content VALUES (%d, %d, 'This is first draft of hospital`s website');\n"
-                            , i, webpages.get(i%webpages.size()))
+                            , initialID + i, webpages.get(i%webpages.size()))
             );
         }
 
@@ -107,15 +107,15 @@ public class PostresGen {
     public String genWeb_page() {
         StringBuilder result = new StringBuilder();
 
-        int finish = this.gen.nextInt(20, 31);
+        int finish = DataGenerator.nextInt(20, 31);
         ArrayList<Integer> users = getSubsetIDs(userIDs, userIDs.size());
 
         for(int i = 1; i <= finish; ++i){
             result.append(
                     String.format("INSERT INTO web_page VALUES (%d, %d);\n"
-                            , i, users.get(i%users.size()))
+                            , initialID + i, users.get(i%users.size()))
             );
-            this.web_pageIDs.add(i);
+            this.web_pageIDs.add(initialID + i);
         }
 
         return result.toString();
@@ -141,7 +141,7 @@ public class PostresGen {
     public String genApproved_request() {
         StringBuilder result = new StringBuilder();
 
-        int finish = this.gen.nextInt(10, 31);
+        int finish = DataGenerator.nextInt(10, 31);
         ArrayList<Integer> requests = getSubsetIDs(requestIDs, requestIDs.size());
         ArrayList<Integer> users = getSubsetIDs(userIDs, userIDs.size());
 
@@ -158,7 +158,7 @@ public class PostresGen {
     public String genRequired_request() {
         StringBuilder result = new StringBuilder();
 
-        int finish = this.gen.nextInt(10, 31);
+        int finish = DataGenerator.nextInt(10, 31);
         ArrayList<Integer> requests = getSubsetIDs(requestIDs, requestIDs.size());
         ArrayList<Integer> users = getSubsetIDs(userIDs, userIDs.size());
 
@@ -175,7 +175,7 @@ public class PostresGen {
     public String genIs_for() {
         StringBuilder result = new StringBuilder();
 
-        int finish = this.gen.nextInt(10, 31);
+        int finish = DataGenerator.nextInt(10, 31);
         ArrayList<Integer> users = getSubsetIDs(userIDs, userIDs.size());
 
         for(int i = 1; i <= finish; ++i){
@@ -191,12 +191,14 @@ public class PostresGen {
     public String genSupply() {
         StringBuilder result = new StringBuilder();
 
-        int finish = this.gen.nextInt(10, 800);
+        int finish = DataGenerator.nextInt(10, 800);
 
         for(int i = 1; i <= finish; ++i){
             result.append(
-                    String.format("INSERT INTO supply VALUES  (%d, 'table', %d);\n"
-                            , i, departmentIDs.get(i%departmentIDs.size()))
+                    String.format("INSERT INTO supply VALUES (%d, '%s', %d);\n"
+                            , initialID + i
+                            , gen.getSupply()
+                            , departmentIDs.get(i%departmentIDs.size()))
             );
         }
 
@@ -206,12 +208,12 @@ public class PostresGen {
     public String genMedicament() {
         StringBuilder result = new StringBuilder();
 
-        int finish = this.gen.nextInt(10, 256);
+        int finish = DataGenerator.nextInt(10, 256);
 
         for(int i = 1; i <= finish; ++i){
             result.append(
                     String.format("INSERT INTO medicament VALUES (%d, '%s', '%s', %d);\n"
-                            , i, gen.getPassword(), gen.getMedicament(), departmentIDs.get(i % departmentIDs.size()))
+                            , initialID + i, gen.getPassword(), gen.getMedicament(), departmentIDs.get(i % departmentIDs.size()))
             );
         }
 
@@ -221,14 +223,14 @@ public class PostresGen {
     public String genMessage() {
         StringBuilder result = new StringBuilder();
 
-        int finish = this.gen.nextInt(10, accountsAmount());
+        int finish = DataGenerator.nextInt(10, accountsAmount());
         ArrayList<Integer> users = getSubsetIDs(userIDs, finish);
         ArrayList<Integer> chats = getSubsetIDs(chatIDs, chatIDs.size());
 
         for(int i = 1; i <= finish; ++i){
             result.append(
                     String.format("INSERT INTO message VALUES (%d, %d, %d, '%s');\n"
-                            , i, chats.get(i % chats.size()), users.get(i%users.size()), gen.getMedicalFact())
+                            , initialID + i, chats.get(i % chats.size()), users.get(i%users.size()), gen.getMedicalFact())
             );
         }
 
@@ -238,14 +240,14 @@ public class PostresGen {
     public String genChat() {
         StringBuilder result = new StringBuilder();
 
-        int finish = this.gen.nextInt(10, 31);
+        int finish = DataGenerator.nextInt(10, 31);
 
         for(int i = 1; i <= finish; ++i){
             result.append(
-                    String.format("INSERT INTO chat VALUES (%d, 'Chat name');\n"
-                            , i)
+                    String.format("INSERT INTO chat VALUES (%d, '%s');\n"
+                            , initialID + i, gen.getRandFact())
             );
-            this.chatIDs.add(i);
+            this.chatIDs.add(initialID + i);
         }
 
         return result.toString();
@@ -254,14 +256,14 @@ public class PostresGen {
     public String genRequest() {
         StringBuilder result = new StringBuilder();
 
-        int finish = this.gen.nextInt(10, 310);
+        int finish = DataGenerator.nextInt(10, 310);
 
         for(int i = 1; i <= finish; ++i){
             result.append(
                     String.format("INSERT INTO request VALUES (%d, 'I need %s', %b);\n"
-                            , i, gen.getMedicament(), gen.getBool())
+                            , initialID + i, gen.getMedicament(), gen.getBool())
             );
-            this.requestIDs.add(i);
+            this.requestIDs.add(initialID + i);
         }
 
         return result.toString();
@@ -270,15 +272,19 @@ public class PostresGen {
     public String genInvoice() {
         StringBuilder result = new StringBuilder();
 
-        int finish = this.gen.nextInt(2, Math.min(accountsAmount(), 15));
+        int finish = DataGenerator.nextInt(2, Math.min(accountsAmount(), 15));
         ArrayList<Integer> users = getSubsetIDs(userIDs, userIDs.size());
         ArrayList<Integer> patients = getSubsetIDs(patientIDs, patientIDs.size());
 
         for(int i = 1; i <= finish; ++i){
             result.append(
                     String.format("INSERT INTO invoice VALUES (%d, %d, %d, '%d', 'visit to %s + %s');\n"
-                            , i, users.get(i%users.size()), patients.get(i%patients.size()), gen.nextInt(1000, 50000)
-                            , gen.getRole(), gen.getMedicament())
+                            , initialID + i
+                            , users.get(i%users.size())
+                            , patients.get(i%patients.size())
+                            , DataGenerator.nextInt(1000, 50000)
+                            , gen.getRole()
+                            , gen.getMedicament())
             );
         }
 
@@ -288,14 +294,14 @@ public class PostresGen {
     public String genMedical_certificate() {
         StringBuilder result = new StringBuilder();
 
-        int finish = this.gen.nextInt(3, 6);
+        int finish = DataGenerator.nextInt(3, 6);
         ArrayList<Integer> users = getSubsetIDs(userIDs, finish);
         ArrayList<Integer> patients = getSubsetIDs(patientIDs, finish);
 
         for(int i = 1; i <= finish; ++i){
             result.append(
                     String.format("INSERT INTO medical_certificate VALUES (%d, %d, %d, '%d days free from job');\n"
-                    , i, users.get(i-1), patients.get(i-1), gen.nextInt(1, 10000))
+                    , initialID + i, users.get(i-1), patients.get(i-1), DataGenerator.nextInt(1, 1000))
             );
         }
 
@@ -305,14 +311,14 @@ public class PostresGen {
     public String genAppointment() {
         StringBuilder result = new StringBuilder();
 
-        int finish = this.gen.nextInt(3, 10);
+        int finish = DataGenerator.nextInt(3, 10);
         ArrayList<Integer> users = getSubsetIDs(userIDs, finish);
         ArrayList<Integer> patients = getSubsetIDs(patientIDs, finish);
 
         for(int i = 1; i <= finish; ++i){
             result.append(
                     String.format("INSERT INTO appointment VALUES (%d, %d, %d, DATE '%s');\n"
-                    , i, users.get(i-1), patients.get(i-1),gen.getDateTime())
+                    , initialID + i, users.get(i-1), patients.get(i-1),gen.getDateTime())
             );
         }
 
@@ -322,14 +328,14 @@ public class PostresGen {
     public String genMedical_report() {
         StringBuilder result = new StringBuilder();
 
-        int finish = this.gen.nextInt(2, 10);
+        int finish = DataGenerator.nextInt(2, 10);
         ArrayList<Integer> users = getSubsetIDs(userIDs, finish);
         ArrayList<Integer> patients = getSubsetIDs(patientIDs, finish);
 
         for(int i = 1; i <= finish; ++i){
             result.append(
                     String.format("INSERT INTO medical_report VALUES (%d, %d, %d, '%s');\n"
-                            , i, users.get(i-1), patients.get(i-1), gen.getMedicalFact())
+                            , initialID + i, users.get(i-1), patients.get(i-1), gen.getMedicalFact())
             );
         }
 
@@ -339,13 +345,13 @@ public class PostresGen {
     public String genPatient() {
         StringBuilder result = new StringBuilder();
 
-        int finish = this.gen.nextInt(10, accountsAmount());
+        int finish = DataGenerator.nextInt(10, accountsAmount());
         ArrayList<Integer> users = getSubsetIDs(userIDs, finish);
 
         for(int i = 1; i <= finish; ++i){
             result.append(
                     String.format("INSERT INTO patient VALUES (%d, %d, '%s', DATE '%s');\n"
-                            , i, users.get(i-1), gen.getMedicalFact(), gen.getDate())
+                            , initialID + i, users.get(i-1), gen.getMedicalFact(), gen.getDate())
             );
             this.patientIDs.add(i);
         }
@@ -356,13 +362,15 @@ public class PostresGen {
     public String genReport() {
         StringBuilder result = new StringBuilder();
 
-        int finish = this.gen.nextInt(10, accountsAmount());
+        int finish = DataGenerator.nextInt(10, accountsAmount());
         ArrayList<Integer> users = getSubsetIDs(userIDs, finish);
 
         for(int i = 1; i <= finish; ++i){
             result.append(
-                    String.format("INSERT INTO report VALUES (%d, %d, '5000 for advertising to find new doctors');\n"
-                            , i, users.get(i-1))
+                    String.format("INSERT INTO report VALUES (%d, %d, '%d for advertising to find new doctors');\n"
+                            , initialID + i
+                            , users.get(i-1)
+                            , DataGenerator.nextInt(200, 9999))
             );
         }
 
@@ -372,15 +380,15 @@ public class PostresGen {
     public String genNotification() {
         StringBuilder result = new StringBuilder();
 
-        int finish = this.gen.nextInt(10, accountsAmount());
+        int finish = accountsAmount();
         ArrayList<Integer> users = getSubsetIDs(userIDs, finish);
 
         for(int i = 1; i <= finish; ++i){
             result.append(
-                    String.format("INSERT INTO notification VALUES (%d, %d, 'I need more collegues');\n"
-                            , i, users.get(i-1))
+                    String.format("INSERT INTO notification VALUES (%d, %d, '%s');\n"
+                            , initialID + i, users.get(i-1), gen.getRandFact())
             );
-            this.notificationIDs.add(i);
+            this.notificationIDs.add(initialID + i);
         }
 
         return result.toString();
@@ -389,13 +397,13 @@ public class PostresGen {
     public String genSalary() {
         StringBuilder result = new StringBuilder();
 
-        int finish = this.gen.nextInt(10, accountsAmount());
+        int finish = DataGenerator.nextInt(10, accountsAmount());
         ArrayList<Integer> users = getSubsetIDs(userIDs, finish);
 
         for(int i = 1; i <= finish; ++i){
             result.append(
                     String.format("INSERT INTO salary VALUES (%d, %d, %d);\n"
-                            , i, gen.nextInt(20000, 9999999), users.get(i-1))
+                            , initialID + i, DataGenerator.nextInt(20000, 9999999), users.get(i-1))
             );
         }
 
@@ -413,11 +421,18 @@ public class PostresGen {
 
             result.append(
                     String.format("INSERT INTO \"user\" VALUES (%d, '%s', '%s', '%s', '%s', %s, %s, '%s', '%s', %d, %d);\n"
-                            , i, isMale ? gen.getMaleName() : gen.getFemaleName(), gen.getSurname()
-                            , gen.getGender(isMale), gen.getRole(), "null", "null", gen.getAddress(), gen.getPhone()
-                            , gen.nextInt(18, 101), accounts.get(i-1))
+                            , initialID + i
+                            , isMale ? gen.getMaleName() : gen.getFemaleName()
+                            , gen.getSurname()
+                            , gen.getGender(isMale)
+                            , gen.getRole()
+                            , "null", "null"
+                            , gen.getAddress()
+                            , gen.getPhone()
+                            , DataGenerator.nextInt(18, 101)
+                            , accounts.get(i-1))
             );
-            this.userIDs.add(i);
+            this.userIDs.add(initialID + i);
         }
 
         return result.toString();
@@ -426,14 +441,14 @@ public class PostresGen {
     public String genAccount() {
         StringBuilder result = new StringBuilder();
 
-        int finish = this.gen.nextInt(10, 31);
+        int finish = DataGenerator.nextInt(10, 31);
 
         for (int i = 1; i <= finish; ++i) {
             result.append(
                     String.format("INSERT INTO account VALUES (%d, '%s', '%s');\n"
-                            , i, gen.getNickname(), gen.getPassword())
+                            , initialID + i, gen.getNickname(), gen.getPassword())
             );
-            this.accountIDs.add(i);
+            this.accountIDs.add(initialID + i);
         }
 
         return result.toString();
@@ -442,14 +457,14 @@ public class PostresGen {
     public String genAmbulance() {
         StringBuilder result = new StringBuilder();
 
-        int finish = this.gen.nextInt(10, 31);
+        int finish = DataGenerator.nextInt(10, 31);
 
         for (int i = 1; i <= finish; ++i) {
             result.append(
                     String.format("INSERT INTO ambulance VALUES (%d, %b);\n"
-                            , i, gen.getBool())
+                            ,initialID + i, gen.getBool())
             );
-            this.ambulanceIDs.add(i);
+            this.ambulanceIDs.add(initialID + i);
         }
 
         return result.toString();
@@ -458,16 +473,16 @@ public class PostresGen {
     public String genDepartments() {
         StringBuilder result = new StringBuilder();
 
-        int start = this.gen.nextInt(0, 31);
-        int len = this.gen.nextInt(10, 21);
+        int start = DataGenerator.nextInt(0, 31);
+        int len = DataGenerator.nextInt(10, 21);
 
         for (int i = start; i < start + len; ++i) {
             result.append(
                     String.format("INSERT INTO department VALUES (%d, '%s', %d);\n"
-                            , i - start + 1, DataGenerator.departmentNames.get(i)
-                            , gen.nextInt(1000000, 99999999))
+                            , initialID + i - start + 1, DataGenerator.departmentNames.get(i)
+                            , DataGenerator.nextInt(1000000, 99999999))
             );
-            this.departmentIDs.add(i - start + 1);
+            this.departmentIDs.add(initialID + i - start + 1);
         }
 
         return result.toString();
