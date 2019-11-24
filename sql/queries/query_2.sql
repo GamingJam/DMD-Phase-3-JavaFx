@@ -3,7 +3,7 @@ SELECT ssn,
        last_name,
        day_of_week,
        total,
-       statistic_about_appointments.total / count_of_workweeks.amount_of_work_weeks as average
+       statistic_about_appointments.total / count_of_workweeks.amount_of_work_weeks::double precision as average
 FROM (
          SELECT appointed_by_user_ssn,
                 day_of_week,
