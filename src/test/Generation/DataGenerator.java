@@ -4,10 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Scanner;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class DataGenerator {
@@ -62,7 +59,16 @@ public class DataGenerator {
     ));
 
     private static final ArrayList<String> roleNames = new ArrayList<>(Arrays.asList(
-            "patient", "doctor", "nurse"
+            "patient", "doctor", "nurse", "manager", "bookkeeper", "intern", "sysadmin", "receptionist", "patient"
+            , "patient", "patient", "patient", "patient", "patient", "patient", "patient", "patient", "patient", "patient"
+            , "patient", "patient", "patient", "patient", "patient", "patient", "patient", "patient", "patient", "patient"
+            , "patient", "patient", "patient", "patient", "patient", "patient", "patient", "patient", "patient", "patient"
+            , "patient", "patient", "patient", "patient", "patient", "patient", "patient", "patient", "patient", "patient"
+            , "patient", "patient", "patient", "patient", "patient", "patient", "patient", "patient", "patient", "patient"
+            , "patient", "patient", "patient", "patient", "patient", "patient", "patient", "patient", "patient", "patient"
+            , "patient", "patient", "patient", "patient", "patient", "patient", "patient", "patient", "patient", "patient"
+            , "patient", "patient", "patient", "patient", "patient", "patient", "patient", "patient", "patient", "patient"
+            , "patient", "patient", "patient", "patient", "patient", "patient", "patient", "patient", "patient", "patient"
     ));
 
     private static final ArrayList<String> addresses = new ArrayList<>(Arrays.asList(
@@ -132,6 +138,11 @@ public class DataGenerator {
 
     public String getNickname() {
         return nicknamePool.getNext();
+    }
+
+    public ArrayList<String> getNicksSubset(int amount){
+        int begin = nextInt(0, nicknamePool.pool.size()-amount);
+        return new ArrayList<String> (nicknamePool.pool.subList(begin, begin+amount));
     }
 
     public String getAddress() {

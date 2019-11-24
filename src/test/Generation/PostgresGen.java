@@ -4,9 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class PostgresGen {
     private static final int initialID = 100;
@@ -21,6 +19,8 @@ public class PostgresGen {
     private ArrayList<Integer> requestIDs = new ArrayList<>(30);
     private ArrayList<Integer> chatIDs = new ArrayList<>(30);
     private ArrayList<Integer> web_pageIDs = new ArrayList<>(30);
+    private ArrayList<Integer> usersWhoPatient = new ArrayList<>(1000);
+    private ArrayList<Integer> usersWhoDoctor = new ArrayList<>(10);
 
     public PostgresGen() throws FileNotFoundException {
         this.gen = new DataGenerator();
@@ -40,7 +40,7 @@ public class PostgresGen {
         ArrayList<Integer> local = new ArrayList<>(list);
 
         Collections.shuffle(local);
-        return new ArrayList<>(local.subList(0, n));
+        return new ArrayList<Integer> (local.subList(0, n));
     }
 
     public int accountsAmount() {
@@ -312,14 +312,15 @@ public class PostgresGen {
     public String genAppointment() {
         StringBuilder result = new StringBuilder();
 
-        int finish = DataGenerator.nextInt(3, 10);
-        ArrayList<Integer> users = getSubsetIDs(userIDs, finish);
-        ArrayList<Integer> patients = getSubsetIDs(patientIDs, finish);
+        int finish = 5000;
 
         for (int i = 1; i <= finish; ++i) {
             result.append(
                     String.format("INSERT INTO appointment VALUES (%d, %d, %d, TIMESTAMP '%s');\n"
-                            , initialID + i, users.get(i - 1), patients.get(i - 1), gen.getDateTime())
+                            , initialID + i
+                            , usersWhoDoctor.get(i % usersWhoDoctor.size())
+                            , patientIDs.get(i % patientIDs.size())
+                            , gen.getDateTime())
             );
         }
 
@@ -346,17 +347,22 @@ public class PostgresGen {
     public String genPatient() {
         StringBuilder result = new StringBuilder();
 
-        int finish = DataGenerator.nextInt(10, accountsAmount());
-        ArrayList<Integer> users = getSubsetIDs(userIDs, finish);
+        int finish = usersWhoPatient.size();
 
         for (int i = 1; i <= finish; ++i) {
+            int id = initialID + i;
+
             result.append(
                     String.format("INSERT INTO patient VALUES (%d, %d, '%s', DATE '%s');\n"
-                            , initialID + i, users.get(i - 1), gen.getMedicalFact(), gen.getDate())
+                            , id
+                            , usersWhoPatient.get(i - 1)
+                            , gen.getMedicalFact()
+                            , gen.getDate())
             );
-            this.patientIDs.add(initialID + i);
+            this.patientIDs.add(id);
         }
 
+        assert usersWhoPatient.size() == patientIDs.size();
         return result.toString();
     }
 
@@ -418,22 +424,35 @@ public class PostgresGen {
         ArrayList<Integer> accounts = getSubsetIDs(accountIDs, finish);
 
         for (int i = 1; i <= finish; ++i) {
+            int id = initialID + i;
+
             boolean isMale = this.gen.getBool();
+            String role = this.gen.getRole();
+            if(role.equals("doctor") && usersWhoDoctor.size() >= 2){
+                role = "patient";
+            }
+
+            if(role.equals("patient")){
+                usersWhoPatient.add(id);
+            }else if(role.equals("doctor")){
+                usersWhoDoctor.add(id);
+            }
 
             result.append(
                     String.format("INSERT INTO \"user\" VALUES (%d, '%s', '%s', '%s', '%s', %s, %s, '%s', '%s', %d, %d);\n"
-                            , initialID + i
+                            , id
                             , isMale ? gen.getMaleName() : gen.getFemaleName()
                             , gen.getSurname()
                             , gen.getGender(isMale)
-                            , gen.getRole()
-                            , "null", "null"
+                            , role
+                            , (role.equals("patient") ? "null" : getRandomID(departmentIDs))
+                            , (role.equals("doctor") && DataGenerator.nextInt(0, 4) == 0) ? getRandomID(ambulanceIDs) : "null"
                             , gen.getAddress()
                             , gen.getPhone()
                             , DataGenerator.nextInt(18, 101)
                             , accounts.get(i - 1))
             );
-            this.userIDs.add(initialID + i);
+            this.userIDs.add(id);
         }
 
         return result.toString();
@@ -442,12 +461,13 @@ public class PostgresGen {
     public String genAccount() {
         StringBuilder result = new StringBuilder();
 
-        int finish = DataGenerator.nextInt(10, 31);
+        int finish = 1000;
+        ArrayList<String> nicknames = gen.getNicksSubset(finish);
 
         for (int i = 1; i <= finish; ++i) {
             result.append(
                     String.format("INSERT INTO account VALUES (%d, '%s', '%s');\n"
-                            , initialID + i, gen.getNickname(), gen.getPassword())
+                            , initialID + i, nicknames.get(i-1), gen.getPassword())
             );
             this.accountIDs.add(initialID + i);
         }
