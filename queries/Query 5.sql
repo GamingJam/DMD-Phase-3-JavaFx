@@ -11,7 +11,7 @@ FROM(
                 FROM(
                     SELECT distinct ssn, first_name, last_name, EXTRACT(year from date) as year, for_patient_id
                     FROM "user" join appointment on appointed_by_user_ssn = ssn
-                    WHERE role = 'doctor' AND EXTRACT(year from date) > EXTRACT(year from CURRENT_DATE) - 10
+                    WHERE role = 'doctor' AND date >= CURRENT_DATE - INTERVAL '10 year'
                 ) as patients_visited_by_doctor_in_year
                 GROUP BY ssn, first_name, last_name, year
             ) as amount_of_patient_visited_by_doctor_in_year
@@ -29,7 +29,7 @@ JOIN
         FROM(
             SELECT distinct ssn, for_patient_id
             FROM "user" join appointment on appointed_by_user_ssn = ssn
-            WHERE role = 'doctor' AND EXTRACT(year from date) > EXTRACT(year from CURRENT_DATE) - 10
+            WHERE role = 'doctor' AND date >= CURRENT_DATE - INTERVAL '10 year'
         ) as patients_visited_by_doctor_ssn
         GROUP BY ssn
     ) as amount_of_patients_visited_by_doctor_ssn
