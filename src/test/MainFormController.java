@@ -272,4 +272,8 @@ public class MainFormController {
         assert queryField != null : "fx:id=\"txtArea1\" was not injected: check your FXML file 'mainForm.fxml'.";
         assert resultField != null : "fx:id=\"txtArea1\" was not injected: check your FXML file 'mainForm.fxml'.";
     }
+
+    public void btnClean(ActionEvent actionEvent) {
+        resultField.clear();
+    }
 }
