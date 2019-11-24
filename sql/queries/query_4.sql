@@ -1,12 +1,16 @@
-create table possible_charge(
-	charge int
-);
-INSERT INTO possible_charge VALUES (200);
-INSERT INTO possible_charge VALUES (250);
-INSERT INTO possible_charge VALUES (400);
-INSERT INTO possible_charge VALUES (500);
-
-SELECT SUM(charge*amount_of_appointments) as income_in_rubles
+WITH possible_charge AS (
+    SELECT *
+    FROM (
+             SELECT 200
+             UNION ALL
+             SELECT 250
+             UNION ALL
+             SELECT 400
+             UNION ALL
+             SELECT 500
+         ) as possible_charge(charge)
+)
+SELECT SUM(charge * amount_of_appointments) as income_in_rubles
 FROM (
          SELECT age, amount_of_appointments
          FROM (
@@ -31,5 +35,3 @@ WHERE (age < 50 AND amount_of_appointments < 3 AND charge = 200)
    OR (age < 50 AND amount_of_appointments >= 3 AND charge = 250)
    OR (age >= 50 AND amount_of_appointments < 3 AND charge = 400)
    OR (age >= 50 AND amount_of_appointments >= 3 AND charge = 500);
-
-DROP table possible_charge;

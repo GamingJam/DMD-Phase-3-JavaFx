@@ -5,10 +5,14 @@ import java.util.concurrent.TimeUnit;
 
 public class DBConnector {
     private String db_url;
+    private String db_user;
+    private String db_password;
     private Connection connection;
 
-    public DBConnector(String db_url) {
+    public DBConnector(String db_url, String db_user, String db_password) {
         this.db_url = db_url;
+        this.db_user = db_user;
+        this.db_password = db_password;
 
         this.hold_invariant();
     }
@@ -43,7 +47,7 @@ public class DBConnector {
 
     private void connect() throws SQLException {
         // create a connection to the database
-        this.connection = DriverManager.getConnection(this.db_url);
+        this.connection = DriverManager.getConnection(this.db_url, this.db_user, this.db_password);
         System.err.println("Connected to DB successfully");
     }
 
@@ -53,7 +57,8 @@ public class DBConnector {
 
         try (Statement stmt = this.connection.createStatement()) {
             // create a new table
-            ResultSet resultSet = stmt.executeQuery(sql);
+            String new_sql = sql.replaceAll("--.*?\n", " ").replace('\n', ' ');
+            ResultSet resultSet = stmt.executeQuery(new_sql);
             System.err.println("Query succeed");
             int columnCount = resultSet.getMetaData().getColumnCount();
 
