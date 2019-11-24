@@ -22,4 +22,3 @@ FROM "user" JOIN
       WHERE EXTRACT('week' from date) = EXTRACT('week' from '07.04.2017 00:00:01'::timestamp) - 3
       GROUP BY patient.id) as week4 on ssn = week4.user_ssn
 WHERE week1.num >= 2 AND week1.num >= 2 AND week3.num >= 2 AND week4.num >= 2;
-

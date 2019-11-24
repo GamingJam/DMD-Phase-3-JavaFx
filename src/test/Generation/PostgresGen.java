@@ -318,7 +318,7 @@ public class PostgresGen {
 
         for (int i = 1; i <= finish; ++i) {
             result.append(
-                    String.format("INSERT INTO appointment VALUES (%d, %d, %d, DATE '%s');\n"
+                    String.format("INSERT INTO appointment VALUES (%d, %d, %d, TIMESTAMP '%s');\n"
                             , initialID + i, users.get(i - 1), patients.get(i - 1), gen.getDateTime())
             );
         }

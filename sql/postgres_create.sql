@@ -1,3 +1,4 @@
+BEGIN;
 create table department (
     id SERIAL PRIMARY KEY ,
     name varchar(256) ,
@@ -167,24 +168,24 @@ INSERT INTO is_for VALUES (3, 1);
 
 INSERT INTO report VALUES (1, 3, '5000 for advertising to find new doctors');
 
-INSERT INTO patient VALUES (1, 1, 'was bitten by crocodile', '12.03.2017');
-INSERT INTO patient VALUES (2, 4, 'has chikenpox', '10.03.2017');
+INSERT INTO patient VALUES (1, 1, 'was bitten by crocodile', DATE '2017-03-12');
+INSERT INTO patient VALUES (2, 4, 'has chikenpox', DATE '2017-03-10');
 
 INSERT INTO medical_report VALUES (1, 2, 1, 'paracetamol 2 times every day during one week');
 
-INSERT INTO appointment VALUES (1, 2, 1, '15.03.2017 15:30:00');
-INSERT INTO appointment VALUES (2, 2, 1, '22.03.2017 14:00:00');
-INSERT INTO appointment VALUES (3, 2, 1, '29.03.2017 11:10:00');
-INSERT INTO appointment VALUES (4, 2, 1, '05.04.2017 12:45:00');
-INSERT INTO appointment VALUES (5, 2, 1, '16.03.2017 15:30:00');
-INSERT INTO appointment VALUES (6, 2, 1, '23.03.2017 14:00:00');
-INSERT INTO appointment VALUES (7, 2, 1, '30.03.2017 11:10:00');
-INSERT INTO appointment VALUES (8, 2, 1, '06.04.2017 12:45:00');
+INSERT INTO appointment VALUES (1, 2, 1, TIMESTAMP '2017-03-15 15:30:00');
+INSERT INTO appointment VALUES (2, 2, 1, TIMESTAMP '2017-03-22 14:00:00');
+INSERT INTO appointment VALUES (3, 2, 1, TIMESTAMP '2017-03-29 11:10:00');
+INSERT INTO appointment VALUES (4, 2, 1, TIMESTAMP '2017-04-05 12:45:00');
+INSERT INTO appointment VALUES (5, 2, 1, TIMESTAMP '2017-03-16 15:30:00');
+INSERT INTO appointment VALUES (6, 2, 1, TIMESTAMP '2017-03-23 14:00:00');
+INSERT INTO appointment VALUES (7, 2, 1, TIMESTAMP '2017-03-30 11:10:00');
+INSERT INTO appointment VALUES (8, 2, 1, TIMESTAMP '2017-04-06 12:45:00');
 
-INSERT INTO appointment VALUES (9, 2, 2, '17.03.2017 14:25:00');
-INSERT INTO appointment VALUES (10, 2, 2, '24.03.2017 09:10:00');
-INSERT INTO appointment VALUES (11, 2, 2, '31.03.2017 16:30:00');
-INSERT INTO appointment VALUES (12, 2, 2, '07.03.2017 14:00:20');
+INSERT INTO appointment VALUES (9, 2, 2, TIMESTAMP '2017-03-17 14:25:00');
+INSERT INTO appointment VALUES (10, 2, 2, TIMESTAMP '2017-03-24 09:10:00');
+INSERT INTO appointment VALUES (11, 2, 2, TIMESTAMP '2017-03-31 16:30:00');
+INSERT INTO appointment VALUES (12, 2, 2, TIMESTAMP '2017-03-07 14:00:20');
 
 INSERT INTO medical_certificate VALUES (1, 2, 1, '2 weeks free from job');
 
@@ -211,3 +212,4 @@ INSERT INTO salary VALUES (2, 50000, 3);
 INSERT INTO medicament VALUES (1, '001122', 'paracetomol', 1);
 
 INSERT INTO supply VALUES  (1, 'table', 2);
+COMMIT;
