@@ -20,7 +20,7 @@ FROM (
                   FROM (
                            SELECT id as app_id, for_patient_id
                            FROM appointment
-                           WHERE date >= (current_date - interval '1 month')
+                           WHERE date >= ('2017-04-07'::date - interval '1 month')
                        ) as appoinments_in_previous_month
                   GROUP BY for_patient_id
               ) as amount_of_appoinments_in_previous_month
