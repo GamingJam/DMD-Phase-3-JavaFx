@@ -77,7 +77,7 @@ public class MainFormController {
                 "                       SELECT ssn\n" +
                 "                       FROM \"user\"\n" +
                 "                                JOIN account on account_id = account.id\n" +
-                "                       WHERE login = '" + login + "')\n" +
+                "                       WHERE login = '" + login + "' AND gender = 'F')\n" +
                 "                  ) as current_patient\n" +
                 "                      JOIN appointment on for_patient_id = pid\n" +
                 "         )\n" +
