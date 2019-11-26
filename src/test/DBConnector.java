@@ -25,11 +25,12 @@ public class DBConnector {
 
         while(!isConnected){
             try {
+                Class.forName("org.postgresql.Driver");
                 if(connection == null || !connection.isValid(5)){
                     this.connect();
                 }
                 isConnected = true;
-            }catch (SQLException ex){
+            }catch (SQLException | ClassNotFoundException ex){
                 isConnected = false;
                 System.err.println("Error message: " + ex.getLocalizedMessage());
                 try {

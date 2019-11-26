@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Main-Class: test.GUIMain
+Class-Path: "/home/unaimillan/Projects/IdeaProjects/dmd-phase-3-javafx/l
+ ibs/postgresql-42.2.8.jar"
+
