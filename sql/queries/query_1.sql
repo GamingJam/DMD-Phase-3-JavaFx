@@ -1,3 +1,5 @@
+-- Query 1
+
 WITH appointment_for_current AS
          (
              SELECT *
@@ -5,9 +7,8 @@ WITH appointment_for_current AS
                    FROM patient
                    WHERE user_ssn in (
                        SELECT ssn
-                       FROM "user"
-                                JOIN account on account_id = account.id
-                       WHERE login = 'i_am_alfiya')
+                       FROM "user" JOIN account on account_id = account.id
+                       WHERE login = 'i_am_alfiya' AND gender = 'F')
                   ) as current_patient
                       JOIN appointment on for_patient_id = pid
          )
