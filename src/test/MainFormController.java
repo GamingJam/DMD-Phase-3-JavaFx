@@ -105,7 +105,7 @@ public class MainFormController {
         String sql = "SELECT ssn,\n" +
                 "       first_name,\n" +
                 "       last_name,\n" +
-                "       day_of_week,\n" +
+                "       to_char(DATE '2019-11-17'+ INTERVAL '1 day' * day_of_week, 'dy') as weekday,\n" +
                 "       total,\n" +
                 "       statistic_about_appointments.total / count_of_workweeks.amount_of_work_weeks :: double precision as average\n" +
                 "FROM (\n" +
@@ -131,7 +131,9 @@ public class MainFormController {
                 "     ) as count_of_workweeks\n" +
                 "     on count_of_workweeks.appointed_by_user_ssn = statistic_about_appointments.appointed_by_user_ssn\n" +
                 "         JOIN \"user\" on count_of_workweeks.appointed_by_user_ssn = ssn\n" +
-                "WHERE role = 'doctor';\n";
+                "WHERE role = 'doctor'\n" +
+                "ORDER BY ssn, day_of_week;\n";
+
 
         resultField.appendText(connector.query(sql));
         resultField.appendText("----End Of Query----\n");
