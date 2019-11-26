@@ -27,4 +27,5 @@ FROM (
      ) as count_of_workweeks
      on count_of_workweeks.appointed_by_user_ssn = statistic_about_appointments.appointed_by_user_ssn
          JOIN "user" on count_of_workweeks.appointed_by_user_ssn = ssn
-WHERE role = 'doctor';
+WHERE role = 'doctor'
+ORDER BY ssn, day_of_week;

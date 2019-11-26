@@ -131,7 +131,9 @@ public class MainFormController {
                 "     ) as count_of_workweeks\n" +
                 "     on count_of_workweeks.appointed_by_user_ssn = statistic_about_appointments.appointed_by_user_ssn\n" +
                 "         JOIN \"user\" on count_of_workweeks.appointed_by_user_ssn = ssn\n" +
-                "WHERE role = 'doctor';\n";
+                "WHERE role = 'doctor'\n" +
+                "ORDER BY ssn, day_of_week;\n";
+
 
         resultField.appendText(connector.query(sql));
         resultField.appendText("----End Of Query----\n");
