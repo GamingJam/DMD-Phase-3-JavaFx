@@ -61,6 +61,10 @@ public class DBConnector {
             ResultSet resultSet = stmt.executeQuery(new_sql);
             System.err.println("Query succeed");
             int columnCount = resultSet.getMetaData().getColumnCount();
+            for(int i = 0; i < columnCount; ++i){
+                result.append(resultSet.getMetaData().getColumnName(i+1)).append(i == columnCount-1 ? "" : " | ");
+            }
+            result.append("\n");
 
             while (resultSet.next()) {
                 for(int i = 1; i <= columnCount; ++i){
