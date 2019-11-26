@@ -6,7 +6,7 @@ import test.Generation.PostgresGen;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class SampleGen {
+public class GenScript {
     public static void main(String[] args) throws FileNotFoundException {
         PostgresGen gen = new PostgresGen();
 

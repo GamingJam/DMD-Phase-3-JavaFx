@@ -1,9 +1,12 @@
-package test;
+package test.GUI;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -14,6 +17,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import test.DBConnector;
 
 
 public class MainFormController {
@@ -51,10 +55,32 @@ public class MainFormController {
     @FXML
     private TextField tf5_id;
 
-    private String url = "jdbc:postgresql://localhost/postgres";
-    private String user = "postgres";
-    private String pass = "postgres";
-    private DBConnector connector = new DBConnector(url, user, pass);
+    private DBConnector connector = getConnection();
+
+    private DBConnector getConnection(){
+        String address = "localhost";
+        String dbname = "postgres";
+        String user = "postgres";
+        String pass = "postgres";
+
+        try {
+            Scanner scan = new Scanner(new File("config.cfg"));
+            address = scan.nextLine().split("=")[1];
+            dbname = scan.nextLine().split("=")[1];
+            user = scan.nextLine().split("=")[1];
+            pass = scan.nextLine().split("=")[1];
+            System.out.println("Got configs correct!");
+            System.out.println(String.format("Address: %s\nDB Name: %s\nUser: %s\nPass: %s\n"
+                    , address, dbname, user, pass));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IndexOutOfBoundsException e){
+            System.out.println("Failed to load configs, continue with default\n");
+        }
+
+        String url = "jdbc:postgresql://"+address+"/" + dbname;
+        return new DBConnector(url, user, pass);
+    }
 
     @FXML
     void btn1Action(ActionEvent event) {
