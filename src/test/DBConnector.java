@@ -68,7 +68,7 @@ public class DBConnector {
 
             while (resultSet.next()) {
                 for(int i = 1; i <= columnCount; ++i){
-                    if (i > 1) result.append(",  ");
+                    if (i > 1) result.append(", ");
                     result.append(resultSet.getString(i));
                 }
                 result.append("\n");

@@ -8,11 +8,11 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
-public class Main extends Application {
+public class GUIMain extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("mainForm.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("GUI/mainForm.fxml"));
         primaryStage.setTitle("DMD Assignment");
         primaryStage.setScene(new Scene(root, 800, 600));
 
